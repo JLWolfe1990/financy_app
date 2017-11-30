@@ -1,0 +1,26 @@
+<h1>Classifications</h1>
+
+<div class="classification-index-container">
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Classification Name</th>
+          <th>Classification Group</th>
+          <th>Created At</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @classifications.each do |classification| %>
+          <tr>
+            <td><%= classification.name %></td>
+            <td><%= classification.group.titlecase %></td>
+            <td><%= classification.created_at.to_s(:db) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
