@@ -1,0 +1,40 @@
+<h1>Accounts</h1>
+
+<div class="accounts-index-container">
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+        <tr>
+          <th><%= ENV['APP_NAME'] %>Name</th>
+          <th>Name / Official Name</th>
+          <th>Last Synced At</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @accounts.includes(:transactions).each do |account| %>
+          <tr>
+            <td><%= account.display_name %></td>
+            <td>
+              <% if account.plaid_name == account.plaid_official_name %>
+                <%= [account.plaid_name].join(' / ') %>
+              <% else %>
+                <%= [account.plaid_name, account.plaid_official_name].join(' / ') %>
+              <% end %>
+            </td>
+            <td><%= account.last_synced_at.try(:to_s, :db) %></td>
+            <td>
+              <% if account.transactions.count.zero? %>
+                <%= link_to 'Ignore Account', account_path(account), method: :delete, class: 'btn btn-danger' %>
+              <% end %>
+              <%= link_to 'Sync Transactions', fetch_transactions_account_path(account), method: :post, class: 'btn btn-primary' %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

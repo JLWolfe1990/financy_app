@@ -1,0 +1,27 @@
+<h1>Rules</h1>
+
+
+<div class="rules-index-container">
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Regex</th>
+          <th>Classification Name</th>
+          <th>Classification Group</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @rules.each do |rule| %>
+          <tr>
+            <td><%= rule.regex %></td>
+            <td><%= rule.classification_name %></td>
+            <td><%= rule.classification_group %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
