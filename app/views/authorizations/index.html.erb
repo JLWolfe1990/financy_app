@@ -1,0 +1,92 @@
+<div class="row">
+  <div class="col-sm-6">
+    <h1>Authorizations</h1>
+  </div>
+  <div class="col-sm-6">
+    <div style="float: right">
+      <%= link_to 'New Authorization', new_authorization_path, class: 'btn btn-primary' %>
+    </div>
+    <div style="clear: both"></div>
+  </div>
+</div>
+
+<div class="authorizations-index-container">
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nickname</th>
+          <th>Official Name</th>
+          <th>Connected</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @authorizations.each do |authorization| %>
+          <tr>
+            <td><%= authorization.name %></td>
+            <td><%= authorization.plaid_institution.name %></td>
+            <td><%= authorization.connected? %></td>
+            <td>
+              <% if authorization.connected? %>
+                <%= link_to 'Add Accounts', add_accounts_authorization_path(authorization), method: :post, class: 'btn btn-primary' %>
+              <% else %>
+                <a href="#"
+                   id="authorize"
+                   data-id="<%= authorization.id %>"
+                   data-plaid-institution-id="<%= authorization.plaid_institution_id %>"
+                   class="btn btn-success">Link</a>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!--TODO-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/popper.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script>
+  (function($) {
+    var connect = function(callback) {
+      return Plaid.create({
+        apiVersion: 'v2',
+        clientName: '<%= ENV['APP_NAME'] %>',
+        env: 'development',
+        product: ['transactions'],
+        key: '<%= ENV["PLAID_PUBLIC_KEY"] %>',
+        onSuccess: callback
+      });
+    };
+
+    $('#authorize').on('click', function(e) {
+      $(e.target).attr('data-clicked', true);
+
+      var handler = connect(
+        function(public_token, metadata) {
+          var id = $('#authorize[data-clicked]').attr('data-id');
+          //todo: get rid of the clicked attr
+          var inst_id = metadata.institution.institution_id
+          var json ={
+            plaid_token: public_token,
+            plaid_institution_id: inst_id
+          };
+
+          $.post('/authorizations/' + id + '/link', json, function() {
+            $('#container').fadeOut('fast', function() {
+              $('#intro').hide();
+            });
+          }).success(function(){ location.reload(); });
+        }
+      );
+
+      handler.open();
+    });
+  })(jQuery);
+</script>

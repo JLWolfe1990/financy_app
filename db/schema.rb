@@ -10,16 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130225751) do
+ActiveRecord::Schema.define(version: 20171201092547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.bigint "plaid_institution_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.string "name"
+    t.string "plaid_id"
+    t.string "plaid_name"
+    t.string "plaid_type"
+    t.string "plaid_sub_type"
+    t.bigint "authorization_id"
+    t.string "plaid_official_name"
+    t.datetime "last_synced_at"
+    t.index ["authorization_id"], name: "index_accounts_on_authorization_id"
+    t.index ["plaid_institution_id"], name: "index_accounts_on_plaid_institution_id"
+    t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
+
+  create_table "authorizations", force: :cascade do |t|
+    t.bigint "plaid_institution_id"
+    t.bigint "user_id"
+    t.string "public_token"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "access_token"
+    t.index ["plaid_institution_id"], name: "index_authorizations_on_plaid_institution_id"
+    t.index ["user_id"], name: "index_authorizations_on_user_id"
+  end
 
   create_table "classifications", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "group"
+  end
+
+  create_table "plaid_institutions", force: :cascade do |t|
+    t.string "name"
+    t.string "plaid_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "json"
   end
 
   create_table "rules", force: :cascade do |t|
@@ -38,6 +76,12 @@ ActiveRecord::Schema.define(version: 20171130225751) do
     t.float "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "account_id"
+    t.string "plaid_account_owner"
+    t.boolean "plaid_pending"
+    t.string "plaid_id"
+    t.string "plaid_transaction_type"
+    t.index ["account_id"], name: "index_transactions_on_account_id"
     t.index ["classification_id"], name: "index_transactions_on_classification_id"
     t.index ["rule_id"], name: "index_transactions_on_rule_id"
   end
@@ -64,7 +108,13 @@ ActiveRecord::Schema.define(version: 20171130225751) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "accounts", "authorizations"
+  add_foreign_key "accounts", "plaid_institutions"
+  add_foreign_key "accounts", "users"
+  add_foreign_key "authorizations", "plaid_institutions"
+  add_foreign_key "authorizations", "users"
   add_foreign_key "rules", "classifications"
+  add_foreign_key "transactions", "accounts"
   add_foreign_key "transactions", "classifications"
   add_foreign_key "transactions", "rules"
 end

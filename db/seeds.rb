@@ -41,4 +41,7 @@ ActiveRecord::Base.transaction do
   Classification.create! group: Classification.groups[:personal], name: 'Tolls'
   Classification.create! group: Classification.groups[:personal], name: 'Entertainment'
   Classification.create! group: Classification.groups[:personal], name: 'Misc'
+
+  PlaidInstitution.destroy_all
+  PlaidInstitution.refresh!
 end
