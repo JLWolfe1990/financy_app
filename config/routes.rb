@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   resources :transactions, only: [:index, :edit, :update, :show]
 
-  resources :rules, only: [:show, :index, :new, :create, :update] do
+  resources :rules, only: [:show, :index, :new, :create, :update, :edit] do
     post 'apply', on: :collection
   end
 

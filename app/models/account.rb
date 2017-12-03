@@ -24,6 +24,8 @@ class Account < ApplicationRecord
         }
       )
 
+      count = txns['total_transactions'] if count == 0 and offset == 0
+
       txns['transactions'].each do |txn|
         transaction = Transaction.find_by(plaid_id: txn['transaction_id'])
         if transaction && transaction.plaid_pending != txn['pending']

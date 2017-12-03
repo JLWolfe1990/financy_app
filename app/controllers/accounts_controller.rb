@@ -20,14 +20,16 @@ class AccountsController < ApplicationController
     @account = Account.find(params.fetch(:id))
     @account.fetch_transactions!
 
+    Rule.apply_all current_user
+
     redirect_to account_transactions_path(account_id: @account.id)
   end
 
   def transactions
     Transaction.transaction do
       @account = Account.find(params.fetch(:account_id))
-      @transactions = @account.transactions.page(params[:page]).per(50)
-      @total = @account.transactions.sum(:amount)
+      @transactions = @account.transactions.focus.page(params[:page]).per(50)
+      @total = @account.transactions.focus.sum(:amount)
     end
   end
 

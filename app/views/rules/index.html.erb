@@ -25,7 +25,7 @@
         <tbody>
         <% @rules.each do |rule| %>
           <tr>
-            <td><%= rule.regex %></td>
+            <td>/<%= rule.regex %>/</td>
             <td><%= rule.classification_name %></td>
             <td><%= rule.classification_group %></td>
           </tr>
@@ -33,5 +33,9 @@
         </tbody>
       </table>
     </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <%= paginate @rules, theme: 'twitter-bootstrap-4' %>
   </div>
 </div>

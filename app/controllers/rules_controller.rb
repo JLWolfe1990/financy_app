@@ -2,7 +2,7 @@ class RulesController < ApplicationController
   before_action :populate_similar_transactions, only: [:new, :create]
 
   def index
-    @rules = Rule.all
+    @rules = Rule.all.page params[:page]
   end
 
   def new
@@ -22,7 +22,19 @@ class RulesController < ApplicationController
     end
   end
 
+  def edit
+    @rule = Rule.find(params.fetch(:id))
+  end
+
   def update
+    @rule = Rule.find(params.fetch(:id))
+
+    Rule.transaction do
+      if @rule.update update_params
+        @rule.reapply!(current_user)
+        redirect_to new_rule_path
+      end
+    end
   end
 
   def apply
@@ -42,5 +54,9 @@ class RulesController < ApplicationController
 
   def create_params
     params.require(:rule).permit(:id, :regex, :classification_id, :user_id)
+  end
+
+  def update_params
+    create_params
   end
 end

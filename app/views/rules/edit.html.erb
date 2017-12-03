@@ -1,0 +1,15 @@
+<h1>Update Rule</h1>
+<div class="row">
+  <div class="col-sm-12">
+    <%= simple_form_for @rule, wrapper: :inline_form, html: { class: 'form-inline' } do |f| %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.input :regex, placeholder: 'Regex' %>
+      <%= f.association :classification,
+                        collection: Classification.all.order(:group, :name),
+                        label_method: :display_name,
+                        value_method: :id,
+                        prompt: 'Select Category' %>
+      <%= f.submit class: 'btn btn-success' %>
+    <% end %>
+  </div>
+</div>
