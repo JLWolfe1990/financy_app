@@ -19,6 +19,8 @@ ActiveRecord::Base.transaction do
   Classification.create! group: Classification.groups[:mixed], name: 'Student Loans'
   Classification.create! group: Classification.groups[:mixed], name: 'Debt Payment'
   Classification.create! group: Classification.groups[:mixed], name: 'Cash'
+  Classification.create! group: Classification.groups[:mixed], name: 'Ignore'
+  Classification.create! group: Classification.groups[:mixed], name: 'Misc'
 
 
   Classification.create! group: Classification.groups[:business], name: 'Materials & Supplies'
@@ -27,6 +29,7 @@ ActiveRecord::Base.transaction do
   Classification.create! group: Classification.groups[:business], name: 'Misc'
   Classification.create! group: Classification.groups[:business], name: 'Communication'
   Classification.create! group: Classification.groups[:business], name: 'Travel'
+  Classification.create! group: Classification.groups[:business], name: 'Banking Fee'
 
   Classification.create! group: Classification.groups[:personal], name: 'Clothing'
   Classification.create! group: Classification.groups[:personal], name: 'Investments'

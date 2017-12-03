@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% transactions.each do |txn| %>
+        <tr>
+          <td><nobr><%= txn.date %></nobr></td>
+          <td><%= txn.description %></td>
+          <td><%= humanized_money_with_symbol txn.amount %></td>
+          <th>
+            <button id="show-transaction"
+                    href="#"
+                    data-path="<%= transaction_path(txn) %>"
+                    class="transaction-details-btn btn btn-primary"
+                    data-id="<%= txn.id %>">Details</button>
+          </th>
+        </tr>
+
+        <% if txn == transactions.last && total %>
+          <tr>
+            <td></td>
+            <td><strong>AMOUNT:</strong></td>
+            <td><strong><%= humanized_money_with_symbol total %></strong></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center">
+      <%= paginate transactions, theme: 'twitter-bootstrap-4' %>
+    </div>
+  </div>
+</div>
+
+<div class="transaction-container"></div>

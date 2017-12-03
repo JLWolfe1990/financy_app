@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201092547) do
+ActiveRecord::Schema.define(version: 20171201105728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,7 +65,9 @@ ActiveRecord::Schema.define(version: 20171201092547) do
     t.bigint "classification_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["classification_id"], name: "index_rules_on_classification_id"
+    t.index ["user_id"], name: "index_rules_on_user_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -114,6 +116,7 @@ ActiveRecord::Schema.define(version: 20171201092547) do
   add_foreign_key "authorizations", "plaid_institutions"
   add_foreign_key "authorizations", "users"
   add_foreign_key "rules", "classifications"
+  add_foreign_key "rules", "users"
   add_foreign_key "transactions", "accounts"
   add_foreign_key "transactions", "classifications"
   add_foreign_key "transactions", "rules"

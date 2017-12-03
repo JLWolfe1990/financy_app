@@ -3,7 +3,10 @@ class Transaction < ApplicationRecord
   belongs_to :rule, optional: true
   belongs_to :account
 
-  delegate :name, to: :rule, allow_nil: true, prefix: true
+  has_one :user, through: :account
+
+  scope :unclassified, -> { where(classification_id: nil) }
+  scope :for_user, -> (user) { where(accounts: { user_id: user.id }) }
 
   def pending?
     !!plaid_pending

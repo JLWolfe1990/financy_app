@@ -11,4 +11,10 @@ class ClassificationsController < ApplicationController
 
   def update
   end
+
+  def show
+    @classification = Classification.find(params.fetch(:id))
+    @transactions = @classification.transactions.page(params[:page])
+    @total = @classification.transactions.sum(:amount)
+  end
 end

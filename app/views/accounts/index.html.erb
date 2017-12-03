@@ -27,6 +27,8 @@
             <td>
               <% if account.transactions.count.zero? %>
                 <%= link_to 'Ignore Account', account_path(account), method: :delete, class: 'btn btn-danger' %>
+              <% else %>
+                <%= link_to 'Transactions', account_transactions_path(account), class: 'btn btn-primary' %>
               <% end %>
               <%= link_to 'Sync Transactions', fetch_transactions_account_path(account), method: :post, class: 'btn btn-primary' %>
             </td>

@@ -27,6 +27,7 @@ class AccountsController < ApplicationController
     Transaction.transaction do
       @account = Account.find(params.fetch(:account_id))
       @transactions = @account.transactions.page(params[:page]).per(50)
+      @total = @account.transactions.sum(:amount)
     end
   end
 

@@ -7,4 +7,9 @@ class TransactionsController < ApplicationController
 
   def update
   end
+
+  def show
+    @transaction = Transaction.find(params.fetch(:id))
+    render partial: 'transactions/show', layout: false
+  end
 end
