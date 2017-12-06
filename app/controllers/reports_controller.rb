@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   def new
     @report = Report.new
-    @report_types = [SummaryReport, ClassificationReport]
+    @report_types = [RuleReport, ClassificationReport]
   end
 
   def create

@@ -42,7 +42,11 @@ class RulesController < ApplicationController
 
   def show
     @rule = Rule.find(params.fetch(:id))
-    @transactions = @rule.transactions.joins(:account).for_user(current_user).page(params[:page])
+    @all_transactions = @rule.transactions
+    @start_date = Date.parse(params[:start_date]) if params[:start_date]
+    @end_date = Date.parse(params[:end_date]) if params[:end_date]
+    @all_transactions = @all_transactions.range(@start_date, @end_date)
+    @transactions = @all_transactions.joins(:account).for_user(current_user).page(params[:page])
     @total = @rule.transactions.sum(:amount)
   end
 
