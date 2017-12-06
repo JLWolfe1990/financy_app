@@ -1,4 +1,7 @@
 class ClassificationsController < ApplicationController
+  before_action :find_object, only: [:show, :transactions]
+  before_action :find_transactions, only: [:show, :transactions]
+
   def index
     @classifications = Classification.all
   end
@@ -10,5 +13,30 @@ class ClassificationsController < ApplicationController
   end
 
   def update
+  end
+
+  def show
+  end
+
+  def transactions
+    render partial: 'transactions', layout: false
+  end
+
+  private
+
+  def find_object
+    @classification = Classification.find(params.fetch(:id))
+  end
+
+  def find_transactions
+    @start_date = Date.parse(params[:start_date]) if params[:start_date]
+    @end_date = Date.parse(params[:end_date]) if params[:end_date]
+
+    @all_transactions = @classification.transactions
+
+    @all_transactions = @all_transactions.range(@start_date, @end_date) if @start_date && @end_date
+
+    @total = @all_transactions.sum(:amount)
+    @transactions = @all_transactions.page(params[:page])
   end
 end

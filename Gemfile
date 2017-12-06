@@ -16,6 +16,7 @@ gem 'simple_form'
 gem 'money-rails'
 gem 'kaminari'
 gem 'bootstrap4-kaminari-views'
+gem 'underscore-rails'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

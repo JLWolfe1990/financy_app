@@ -14,4 +14,5 @@
 //= require rails-ujs
 //= require popper
 //= require bootstrap-sprockets
+//= require underscore
 //= require_tree .

@@ -1,0 +1,35 @@
+<div class="transaction-modal">
+  <div class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Transaction Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= render partial: 'show_card', locals: { label: 'Date', contents: @transaction.date } %>
+
+          <br/>
+          <%= render partial: 'show_card', locals: { label: 'Classification', contents: @transaction.classification&.display_name } %>
+
+          <% if @transaction.rule %>
+            <br/>
+            <%= render partial: 'show_card', locals: { label: 'Rule', contents: @transaction.rule.display_name, link: rule_path(@transaction.rule) } %>
+          <% end %>
+
+          <br/>
+          <%= render partial: 'show_card', locals: { label: 'Full Description', contents: @transaction.description} %>
+
+          <br/>
+          <%= render partial: 'show_card', locals: { label: 'Imported At', contents: @transaction.created_at.strftime('%Y-%m-%d') } %>
+        </div>
+        <div class="modal-footer">
+          <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,2 +1,42 @@
-<h1>Rules#new</h1>
-<p>Find me in app/views/rules/new.html.erb</p>
+<% if @transactions.present? %>
+  <h1>Create a New Rule for These Transactions</h1>
+  <div class="row">
+    <div class="col-sm-12">
+      <%= simple_form_for @rule, wrapper: :inline_form, html: { class: 'form-inline' } do |f| %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.input :regex, placeholder: 'Regex' %>
+        <%= f.association :classification,
+                          collection: Classification.all.order(:group, :name),
+                          label_method: :display_name,
+                          value_method: :id,
+                          prompt: 'Select Category' %>
+        <%= f.submit class: 'btn btn-success' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @transactions.each do |txn| %>
+          <tr>
+            <td><nobr><%= txn.date %></nobr></td>
+            <td><%= txn.description %></td>
+            <td><%= humanized_money_with_symbol txn.amount %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% else %>
+  <h1>Congratulations! All Transactions Have Been Classified!!!</h1>
+<% end %>

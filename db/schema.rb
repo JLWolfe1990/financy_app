@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201092547) do
+ActiveRecord::Schema.define(version: 20171203213438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,12 +60,22 @@ ActiveRecord::Schema.define(version: 20171201092547) do
     t.text "json"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.bigint "user_id"
+    t.string "type"
+    t.index ["user_id"], name: "index_reports_on_user_id"
+  end
+
   create_table "rules", force: :cascade do |t|
     t.string "regex"
     t.bigint "classification_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["classification_id"], name: "index_rules_on_classification_id"
+    t.index ["user_id"], name: "index_rules_on_user_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -113,7 +123,9 @@ ActiveRecord::Schema.define(version: 20171201092547) do
   add_foreign_key "accounts", "users"
   add_foreign_key "authorizations", "plaid_institutions"
   add_foreign_key "authorizations", "users"
+  add_foreign_key "reports", "users"
   add_foreign_key "rules", "classifications"
+  add_foreign_key "rules", "users"
   add_foreign_key "transactions", "accounts"
   add_foreign_key "transactions", "classifications"
   add_foreign_key "transactions", "rules"

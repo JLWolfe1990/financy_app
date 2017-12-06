@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <h6 class="card-header"><%= label %></h6>
+      <div class="card-body">
+        <div class="card-text">
+          <% if defined?(link) %>
+            <%= link_to contents, link %>
+          <% else %>
+            <%= contents %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

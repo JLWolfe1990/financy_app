@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :accounts
   has_many :authorizations
+  has_many :transactions, through: :accounts
 end
