@@ -1,0 +1,9 @@
+<h1>Create a New Report</h1>
+
+<%= simple_form_for @report do |f| %>
+  <%= f.input :start_at, as: :string, placeholder: 'YYYY/MM/DD' %>
+  <%= f.input :end_at, as: :string, placeholder: 'YYYY/MM/DD' %>
+  <%= f.input :type, collection: @report_types %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.submit %>
+<% end %>

@@ -33,7 +33,12 @@
 
 <br/>
 
-<h4>Related Transactions</h4>
+<h4>
+  Related Transactions
+  <% if @start_date && @end_date %>
+  <small><%= @start_date.strftime('%Y-%m-%d') %> thru <%= @end_date.strftime('%Y-%m-%d') %></small>
+  <% end %>
+</h4>
 
 <% if @transactions.present? %>
   <%= render partial: 'transactions/index_nested', locals: { transactions: @transactions, total: @total} %>

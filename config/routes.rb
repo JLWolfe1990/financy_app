@@ -21,8 +21,12 @@ Rails.application.routes.draw do
     post 'apply', on: :collection
   end
 
-  resources :classifications, except: :destroy
+  resources :classifications, except: :destroy do
+    get 'transactions', on: :member
+  end
 
   devise_for :users
   resources :users
+
+  resources :reports, only: [:new, :create, :show]
 end

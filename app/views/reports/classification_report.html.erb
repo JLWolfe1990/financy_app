@@ -1,0 +1,39 @@
+<% start_date = @report.start_at.strftime('%Y/%m/%d') %>
+<% end_date = @report.end_at.strftime('%Y/%m/%d') %>
+
+<div class="classification-report report">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Classification Report: <small><%= start_date %> thru <%= end_date %></small></h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table table-condensed">
+        <thead>
+        <tr>
+          <th>Classification Name</th>
+          <th>Amount Over Period</th>
+          <th>Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @report.transaction_groups.each do |classification, txns| %>
+          <tr>
+            <td>
+              <%= classification.display_name %>
+            </td>
+            <td>
+              <%= humanized_money_with_symbol @report.transaction_totals[classification].round(2) %>
+            </td>
+            <td>
+              <%= link_to 'Details', classification_path(classification, start_date: start_date, end_date: end_date), class: 'btn btn-primary' %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

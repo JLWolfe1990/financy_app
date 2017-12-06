@@ -14,6 +14,9 @@
   <li class="nav-item <%= controller_name.include?('transactions') ? 'active' : '' %>">
     <%= link_to 'Transactions', transactions_path, class: "nav-link" %>
   </li>
+  <li class="nav-item <%= controller_name.include?('reports') ? 'active' : '' %>">
+    <%= link_to 'Reports', new_report_path, class: "nav-link" %>
+  </li>
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       My Account
