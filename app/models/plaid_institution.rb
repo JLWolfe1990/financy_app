@@ -1,4 +1,6 @@
 class PlaidInstitution < ApplicationRecord
+  acts_as_universal
+
   def self.refresh!
     batch_size = 500
     offset = 0
@@ -25,17 +27,4 @@ class PlaidInstitution < ApplicationRecord
       break if count <= 0
     end
   end
-
-  # def create_account_for_user(user, username, password)
-  #   account = user.accounts.detect {|account| account == self}
-  #   return account if account
-  #
-  #   item_response = PlaidWrapper.client.item.create credentials: { username: username, password: password },
-  #                                                   institution_id: plaid_id,
-  #                                                   initial_products: %i(transactions)
-  #   access_token = item_response['access_token']
-  #   user.accounts.create! access_token: access_token,
-  #                         plaid_institution: self,
-  #                         username: username
-  # end
 end

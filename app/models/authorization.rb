@@ -1,4 +1,6 @@
 class Authorization < ApplicationRecord
+  acts_as_tenant
+
   belongs_to :plaid_institution
   belongs_to :user
 

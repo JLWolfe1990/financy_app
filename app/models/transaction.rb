@@ -1,4 +1,6 @@
 class Transaction < ApplicationRecord
+  acts_as_tenant
+
   default_scope { order(date: :desc) }
 
   belongs_to :classification, optional: true
@@ -8,7 +10,6 @@ class Transaction < ApplicationRecord
   has_one :user, through: :account
 
   scope :unclassified, -> { where(classification_id: nil) }
-  scope :for_user, -> (user) { joins(:account).where(accounts: { user_id: user.id }) }
   scope :focus, -> { where("transactions.classification_id NOT IN (#{Classification.ignored.map(&:id).join(', ')}) or transactions.classification_id IS NULL") }
   scope :range, ->(start_at, end_at) { where('date >= ? and date <= ?', start_at.strftime('%Y/%m/%d'), end_at.strftime('%Y/%m/%d'))}
 

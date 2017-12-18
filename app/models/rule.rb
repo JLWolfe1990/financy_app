@@ -1,4 +1,6 @@
 class Rule < ApplicationRecord
+  acts_as_tenant
+
   belongs_to :classification
   belongs_to :user
 
@@ -10,22 +12,22 @@ class Rule < ApplicationRecord
 
   validates :regex, presence: true, uniqueness: { scope: :user_id }
 
-  def self.apply_all(user)
-    all.each {|rule| rule.apply!(user)}
+  def self.apply_all
+    all.each(&:apply!)
   end
 
-  def apply!(user)
-    Transaction.for_user(user).unclassified.find_each do |txn|
+  def apply!
+    Transaction.unclassified.find_each do |txn|
       if txn.description.match(Regexp.new(regex))
         txn.update! classification: classification, rule: self
       end
     end
   end
 
-  def reapply!(user)
+  def reapply!
     transactions.update_all(rule_id: nil, classification_id: nil)
 
-    Rule.apply_all user
+    Rule.apply_all
   end
 
   def display_name

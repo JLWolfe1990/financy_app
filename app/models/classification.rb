@@ -1,4 +1,6 @@
 class Classification < ApplicationRecord
+  acts_as_tenant
+
   enum group: [:mixed, :business, :personal]
 
   has_many :rules

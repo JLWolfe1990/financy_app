@@ -1,4 +1,6 @@
 class Report < ApplicationRecord
+  acts_as_tenant
+
   belongs_to :user
 
   def transactions

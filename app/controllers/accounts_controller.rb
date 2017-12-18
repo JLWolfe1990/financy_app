@@ -13,14 +13,14 @@ class AccountsController < ApplicationController
   end
 
   def index
-    @accounts = Account.where(user: current_user)
+    @accounts = Account.all
   end
 
   def fetch_transactions
     @account = Account.find(params.fetch(:id))
     @account.fetch_transactions!
 
-    Rule.apply_all current_user
+    Rule.apply_all
 
     redirect_to account_transactions_path(account_id: @account.id)
   end
