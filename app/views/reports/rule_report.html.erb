@@ -22,17 +22,22 @@
         <tbody>
         <% @report.transaction_groups.each do |rule, txns| %>
           <tr>
-            <td>
-              /<%= rule.regex %>/
-            </td>
-            <td>
-              <%= rule.classification.display_name %>
-            </td>
+            <% if rule %>
+              <td>
+                /<%= rule.regex %>/
+              </td>
+              <td>
+                <%= rule.classification.display_name %>
+              </td>
+            <% else %>
+              <td>None</td>
+              <td>Unclassified</td>
+            <% end %>
             <td>
               <%= humanized_money_with_symbol @report.transaction_totals[rule].round(2) %>
             </td>
             <td>
-              <%= link_to 'Details', rule_path(rule, start_date: start_date, end_date: end_date), class: 'btn btn-primary' %>
+              <%= link_to 'Details', rule_path(rule, start_date: start_date, end_date: end_date), class: 'btn btn-primary' if rule%>
             </td>
           </tr>
         <% end %>
