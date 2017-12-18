@@ -2,7 +2,7 @@ class RulesController < ApplicationController
   before_action :populate_similar_transactions, only: [:new, :create]
 
   def index
-    @rules = Rule.all.page params[:page]
+    @rules = Rule.all.order(:regex).page params[:page]
   end
 
   def new

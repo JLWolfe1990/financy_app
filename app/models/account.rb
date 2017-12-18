@@ -28,18 +28,19 @@ class Account < ApplicationRecord
 
       txns['transactions'].each do |txn|
         transaction = Transaction.find_by(plaid_id: txn['transaction_id'])
-        if transaction && transaction.plaid_pending != txn['pending']
-          transaction.update! plaid_pending: txn['pending']
-        else
-          Transaction.create! account_id: id,
-                              amount: txn['amount'],
-                              description: txn['name'],
-                              date: txn['date'],
-                              plaid_account_owner: txn['account_owner'],
-                              plaid_pending: txn['pending'],
-                              plaid_id: txn['transaction_id'],
-                              plaid_transaction_type: txn['transaction_type']
-        end
+
+        attrs = {
+          account_id: id,
+          amount: txn['amount'],
+          description: txn['name'],
+          date: txn['date'],
+          plaid_account_owner: txn['account_owner'],
+          plaid_pending: txn['pending'],
+          plaid_id: txn['transaction_id'],
+          plaid_transaction_type: txn['transaction_type']
+        }
+
+        transaction.present? ? transaction.update!(attrs) : Transaction.create!(attrs)
       end
 
       count = count - batch_size
