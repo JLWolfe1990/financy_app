@@ -1,22 +1,24 @@
 <ul class="navbar-nav mr-auto">
-  <li class="nav-item <%= controller_name.include?('authorization') ? 'active' : '' %>">
-    <%= link_to 'Authorizations', authorizations_path, class: "nav-link" %>
-  </li>
-  <li class="nav-item <%= controller_name.include?('accounts') ? 'active' : '' %>">
-    <%= link_to 'Accounts', accounts_path, class: "nav-link" %>
-  </li>
-  <li class="nav-item <%= controller_name.include?('classifications') ? 'active' : '' %>">
-    <%= link_to 'Classifications', classifications_path, class: "nav-link" %>
-  </li>
-  <li class="nav-item <%= controller_name.include?('rules') ? 'active' : '' %>">
-    <%= link_to 'Rules', rules_path, class: "nav-link" %>
-  </li>
-  <li class="nav-item <%= controller_name.include?('transactions') ? 'active' : '' %>">
-    <%= link_to 'Transactions', transactions_path, class: "nav-link" %>
-  </li>
-  <li class="nav-item <%= controller_name.include?('reports') ? 'active' : '' %>">
-    <%= link_to 'Reports', new_report_path, class: "nav-link" %>
-  </li>
+  <% if current_user %>
+    <li class="nav-item <%= controller_name.include?('authorization') ? 'active' : '' %>">
+      <%= link_to 'Authorizations', authorizations_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item <%= controller_name.include?('accounts') ? 'active' : '' %>">
+      <%= link_to 'Accounts', accounts_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item <%= controller_name.include?('classifications') ? 'active' : '' %>">
+      <%= link_to 'Classifications', classifications_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item <%= controller_name.include?('rules') ? 'active' : '' %>">
+      <%= link_to 'Rules', rules_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item <%= controller_name.include?('transactions') ? 'active' : '' %>">
+      <%= link_to 'Transactions', transactions_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item <%= controller_name.include?('reports') ? 'active' : '' %>">
+      <%= link_to 'Reports', new_report_path, class: "nav-link" %>
+    </li>
+  <% end %>
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       My Account
@@ -29,7 +31,7 @@
         <%= link_to 'Sign Up', new_user_registration_path, class: 'dropdown-item' %>
       <% end %>
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#">Organization</a>
+      <a class="dropdown-item" href="#">Family</a>
     </div>
   </li>
 </ul>

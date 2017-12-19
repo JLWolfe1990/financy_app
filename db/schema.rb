@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171203213438) do
+ActiveRecord::Schema.define(version: 20171219082418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,8 +28,10 @@ ActiveRecord::Schema.define(version: 20171203213438) do
     t.bigint "authorization_id"
     t.string "plaid_official_name"
     t.datetime "last_synced_at"
+    t.bigint "tenant_id"
     t.index ["authorization_id"], name: "index_accounts_on_authorization_id"
     t.index ["plaid_institution_id"], name: "index_accounts_on_plaid_institution_id"
+    t.index ["tenant_id"], name: "index_accounts_on_tenant_id"
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
@@ -41,7 +43,9 @@ ActiveRecord::Schema.define(version: 20171203213438) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "access_token"
+    t.bigint "tenant_id"
     t.index ["plaid_institution_id"], name: "index_authorizations_on_plaid_institution_id"
+    t.index ["tenant_id"], name: "index_authorizations_on_tenant_id"
     t.index ["user_id"], name: "index_authorizations_on_user_id"
   end
 
@@ -50,6 +54,19 @@ ActiveRecord::Schema.define(version: 20171203213438) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "group"
+    t.bigint "tenant_id"
+    t.index ["tenant_id"], name: "index_classifications_on_tenant_id"
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.bigint "tenant_id"
+    t.bigint "user_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tenant_id"], name: "index_members_on_tenant_id"
+    t.index ["user_id"], name: "index_members_on_user_id"
   end
 
   create_table "plaid_institutions", force: :cascade do |t|
@@ -58,6 +75,8 @@ ActiveRecord::Schema.define(version: 20171203213438) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "json"
+    t.bigint "tenant_id"
+    t.index ["tenant_id"], name: "index_plaid_institutions_on_tenant_id"
   end
 
   create_table "reports", force: :cascade do |t|
@@ -65,6 +84,8 @@ ActiveRecord::Schema.define(version: 20171203213438) do
     t.datetime "end_at"
     t.bigint "user_id"
     t.string "type"
+    t.bigint "tenant_id"
+    t.index ["tenant_id"], name: "index_reports_on_tenant_id"
     t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
@@ -74,8 +95,34 @@ ActiveRecord::Schema.define(version: 20171203213438) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.bigint "tenant_id"
     t.index ["classification_id"], name: "index_rules_on_classification_id"
+    t.index ["tenant_id"], name: "index_rules_on_tenant_id"
     t.index ["user_id"], name: "index_rules_on_user_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  end
+
+  create_table "tenants", force: :cascade do |t|
+    t.bigint "tenant_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tenants_on_name"
+    t.index ["tenant_id"], name: "index_tenants_on_tenant_id"
+  end
+
+  create_table "tenants_users", id: false, force: :cascade do |t|
+    t.bigint "tenant_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["tenant_id", "user_id"], name: "index_tenants_users_on_tenant_id_and_user_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -91,9 +138,11 @@ ActiveRecord::Schema.define(version: 20171203213438) do
     t.boolean "plaid_pending"
     t.string "plaid_id"
     t.string "plaid_transaction_type"
+    t.bigint "tenant_id"
     t.index ["account_id"], name: "index_transactions_on_account_id"
     t.index ["classification_id"], name: "index_transactions_on_classification_id"
     t.index ["rule_id"], name: "index_transactions_on_rule_id"
+    t.index ["tenant_id"], name: "index_transactions_on_tenant_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -114,8 +163,14 @@ ActiveRecord::Schema.define(version: 20171203213438) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.bigint "tenant_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["tenant_id"], name: "index_users_on_tenant_id"
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   add_foreign_key "accounts", "authorizations"
@@ -123,9 +178,12 @@ ActiveRecord::Schema.define(version: 20171203213438) do
   add_foreign_key "accounts", "users"
   add_foreign_key "authorizations", "plaid_institutions"
   add_foreign_key "authorizations", "users"
+  add_foreign_key "members", "tenants"
+  add_foreign_key "members", "users"
   add_foreign_key "reports", "users"
   add_foreign_key "rules", "classifications"
   add_foreign_key "rules", "users"
+  add_foreign_key "tenants", "tenants"
   add_foreign_key "transactions", "accounts"
   add_foreign_key "transactions", "classifications"
   add_foreign_key "transactions", "rules"

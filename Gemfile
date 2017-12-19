@@ -17,6 +17,7 @@ gem 'money-rails'
 gem 'kaminari'
 gem 'bootstrap4-kaminari-views'
 gem 'underscore-rails'
+gem 'milia'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -60,3 +61,5 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
 end
+
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'

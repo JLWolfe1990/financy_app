@@ -14,7 +14,7 @@ class RulesController < ApplicationController
 
     Rule.transaction do
       if @rule.save
-        @rule.apply!(current_user)
+        @rule.apply!
         redirect_to new_rule_path
       else
         render :new
@@ -31,7 +31,7 @@ class RulesController < ApplicationController
 
     Rule.transaction do
       if @rule.update update_params
-        @rule.reapply!(current_user)
+        @rule.reapply!
         redirect_to new_rule_path
       end
     end
@@ -46,14 +46,14 @@ class RulesController < ApplicationController
     @start_date = Date.parse(params[:start_date]) if params[:start_date]
     @end_date = Date.parse(params[:end_date]) if params[:end_date]
     @all_transactions = @all_transactions.range(@start_date, @end_date)
-    @transactions = @all_transactions.joins(:account).for_user(current_user).page(params[:page])
+    @transactions = @all_transactions.joins(:account).page(params[:page])
     @total = @rule.transactions.sum(:amount)
   end
 
   private
 
   def populate_similar_transactions
-    @transactions = Transaction.joins(:account).unclassified.for_user(current_user).order(:description).limit(10)
+    @transactions = Transaction.joins(:account).unclassified.order(:description).limit(10)
   end
 
   def create_params
