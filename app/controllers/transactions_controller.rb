@@ -1,7 +1,7 @@
 class TransactionsController < ApplicationController
   def index
     @transactions = Transaction.all.page params[:page]
-    @total = Transaction.all.sum(:amount)
+    @total = Transaction.not_excluded.sum(:amount)
   end
 
   def edit

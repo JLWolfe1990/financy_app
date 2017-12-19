@@ -33,6 +33,11 @@
             <td><%= humanized_money_with_symbol txn.amount %></td>
           </tr>
         <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><nobr>Remaining: <%= @left_count %></nobr></td>
+        </tr>
         </tbody>
       </table>
     </div>
