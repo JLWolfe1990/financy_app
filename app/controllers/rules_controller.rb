@@ -7,6 +7,7 @@ class RulesController < ApplicationController
 
   def new
     @rule = Rule.new
+    @left_count = Transaction.unclassified.count
   end
 
   def create

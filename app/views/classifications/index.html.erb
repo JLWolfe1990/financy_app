@@ -8,6 +8,7 @@
         <tr>
           <th>Classification Name</th>
           <th>Classification Group</th>
+          <th>Exclude Transactions?</th>
           <th>Created At</th>
         </tr>
         </thead>
@@ -16,6 +17,7 @@
           <tr>
             <td><%= classification.name %></td>
             <td><%= classification.group.titlecase %></td>
+            <td><%= classification.excluded? %></td>
             <td><%= classification.created_at.to_s(:db) %></td>
           </tr>
         <% end %>
