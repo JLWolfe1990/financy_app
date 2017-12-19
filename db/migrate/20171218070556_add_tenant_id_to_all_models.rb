@@ -7,6 +7,5 @@ class AddTenantIdToAllModels < ActiveRecord::Migration[5.1]
     add_reference :reports, :tenant
     add_reference :rules, :tenant
     add_reference :transactions, :tenant
-    add_reference :users, :tenant
   end
 end

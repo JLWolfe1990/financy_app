@@ -1,6 +1,6 @@
 class MoveDataToTenant < ActiveRecord::Migration[5.1]
   def up
-    t_id = Tenant.first.id
+    t_id = Tenant.first.try(:id)
 
     Report.unscoped.update_all tenant_id: t_id
     Account.unscoped.update_all tenant_id: t_id
