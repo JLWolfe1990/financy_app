@@ -56,6 +56,6 @@ production:
   encoding: unicode
   database: financy_app_production
   pool:     5
-  username: financy_app
-  password:
+  username: <%= ENV["DB_USERNAME"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
   template: template0
