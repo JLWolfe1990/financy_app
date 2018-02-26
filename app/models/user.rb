@@ -1,8 +1,8 @@
 class User < ApplicationRecord
+  # acts_as_universal
+
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable,
          :trackable, :validatable
-
-  acts_as_universal
 
   has_one :member, :dependent => :destroy
 

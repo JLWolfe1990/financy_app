@@ -5,11 +5,12 @@ SignupService.perform(
                  },
                  user: {
                    email: 'jwolfe@wfsbs.com',
-                   password: 'fakepass',
-                   password_confirmation: 'fakepass'
+                   password: 'fakepass'
                  }
                }
 )
+
+User.last.confirm
 
 ActiveRecord::Base.transaction do
   Classification.destroy_all
@@ -48,5 +49,5 @@ ActiveRecord::Base.transaction do
   Classification.create! group: Classification.groups[:personal], name: 'Misc'
 
   PlaidInstitution.destroy_all
-  PlaidInstitution.refresh!
+  # PlaidInstitution.refresh!
 end
