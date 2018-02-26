@@ -1,6 +1,4 @@
 class PlaidInstitution < ApplicationRecord
-  acts_as_universal
-
   def self.refresh!
     batch_size = 500
     offset = 0

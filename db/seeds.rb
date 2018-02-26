@@ -49,5 +49,5 @@ ActiveRecord::Base.transaction do
   Classification.create! group: Classification.groups[:personal], name: 'Misc'
 
   PlaidInstitution.destroy_all
-  # PlaidInstitution.refresh!
+  PlaidInstitution.refresh!
 end

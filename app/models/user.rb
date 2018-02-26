@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  # acts_as_universal
-
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable,
          :trackable, :validatable
 
