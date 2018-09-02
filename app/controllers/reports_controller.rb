@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   def new
     @report = Report.new
-    @report_types = [RuleReport, ClassificationReport]
+    @report_types = [RuleReport, ClassificationReport, TransactionReport]
   end
 
   def create
@@ -12,6 +12,8 @@ class ReportsController < ApplicationController
   def show
     @report = Report.find(params.fetch(:id))
     @report.run!
+    @transactions = @report.transactions.page(params[:page]).per(25)
+
     render "reports/#{@report.type.to_s.underscore.downcase}"
   end
 

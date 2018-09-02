@@ -36,7 +36,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-      <%= paginate transactions, theme: 'twitter-bootstrap-4' %>
+      <%= paginate transactions, theme: 'twitter-bootstrap-4', params: { start_at: @start_at_f, end_at: @end_at_f } %>
     </div>
   </div>
 </div>

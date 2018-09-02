@@ -1,3 +1,32 @@
-<h1>Transactions</h1>
 
+<div class="row">
+  <div class="col-3">
+    <h1>Transactions</h1>
+  </div>
+  <div class="col-9">
+    <form action="/transactions" method="get" class="float-right">
+      <div class="row">
+        <div class="col-6">
+          <input type="text"
+                 class="form-control"
+                 name="start_at"
+                 placeholder="Start: (YYYY/MM/DD)"
+                 value="<%= @start_at_f %>">
+        </div>
+        <div class="col-6">
+          <input type="text"
+                 class="form-control"
+                 name="end_at"
+                 placeholder="End: (YYYY/MM/DD)"
+                 value="<%= @end_at_f %>">
+        </div>
+        <div class="col">
+          <input type="number" value="<%= @page %>" name="page" hidden>
+          <button type="submit" hidden></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<br/>
 <%= render partial: 'index_nested', locals: { transactions: @transactions, total: @total} %>

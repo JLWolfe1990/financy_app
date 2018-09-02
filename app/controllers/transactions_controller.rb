@@ -1,7 +1,18 @@
 class TransactionsController < ApplicationController
   def index
-    @transactions = Transaction.all.page params[:page]
-    @total = Transaction.not_excluded.sum(:amount)
+    @report = Report.new
+    @transactions = Transaction.all
+
+    @start_at = params[:start_at] ? DateTime.parse(params[:start_at]) : nil
+    @end_at = params[:end_at] ? DateTime.parse(params[:end_at]) : nil
+
+    @transactions = @transactions.range(@start_at, @end_at) if @start_at
+    @total = @transactions.not_excluded.sum(:amount)
+
+    @start_at_f = @start_at.try(:strftime, '%Y/%m/%d')
+    @end_at_f = @end_at.try(:strftime, '%Y/%m/%d')
+    @page = params[:page]
+    @transactions = @transactions.page @page
   end
 
   def edit
