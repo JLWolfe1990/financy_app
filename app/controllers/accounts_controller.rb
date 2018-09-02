@@ -12,8 +12,19 @@ class AccountsController < ApplicationController
     end
   end
 
+  def update
+    @account = Account.find(params.fetch(:id))
+    @account.update name: object_params[:name]
+
+    redirect_to account_transactions_path(account_id: @account.id)
+  end
+
+  def edit
+    @account = Account.find(params.fetch(:id))
+  end
+
   def index
-    @accounts = Account.all
+    @accounts = Account.order(:created_at)
   end
 
   def fetch_transactions
@@ -22,6 +33,7 @@ class AccountsController < ApplicationController
 
     Rule.apply_all
 
+    @account.update! last_synced_at: DateTime.now
     redirect_to account_transactions_path(account_id: @account.id)
   end
 

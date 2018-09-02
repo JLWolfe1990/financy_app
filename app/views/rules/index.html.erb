@@ -25,7 +25,7 @@
         <tbody>
         <% @rules.each do |rule| %>
           <tr>
-            <td>/<%= rule.regex %>/</td>
+            <td><%= link_to "/#{rule.regex}/", rule_path(rule) %></td>
             <td><%= rule.classification_name %></td>
             <td><%= rule.classification_group %></td>
           </tr>
