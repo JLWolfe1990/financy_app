@@ -46,9 +46,19 @@ class RulesController < ApplicationController
     @all_transactions = @rule.transactions
     @start_date = Date.parse(params[:start_date]) if params[:start_date]
     @end_date = Date.parse(params[:end_date]) if params[:end_date]
-    @all_transactions = @all_transactions.range(@start_date, @end_date)
+    @all_transactions = @all_transactions.range(@start_date, @end_date) if @start_date && @end_date
     @transactions = @all_transactions.joins(:account).page(params[:page])
     @total = @rule.transactions.sum(:amount)
+  end
+
+  def destroy
+    @rule = Rule.find(params.fetch(:id))
+    @rule.transaction do
+      @rule.transactions.update_all(classification_id: nil)
+      @rule.destroy!
+    end
+
+    redirect_to rules_path
   end
 
   private

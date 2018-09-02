@@ -22,6 +22,7 @@
         <tr>
           <th>Date</th>
           <th>Description</th>
+          <th>Account</th>
           <th>Amount</th>
         </tr>
         </thead>
@@ -30,7 +31,8 @@
           <tr>
             <td><nobr><%= txn.date %></nobr></td>
             <td><%= txn.description %></td>
-            <td><%= humanized_money_with_symbol txn.amount %></td>
+            <td><nobr><%= txn.account.display_name %></nobr></td>
+            <td><nobr><%= humanized_money_with_symbol txn.amount %></nobr></td>
           </tr>
         <% end %>
         <tr>

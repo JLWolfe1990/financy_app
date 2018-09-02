@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get 'authorizations/create'
 
-  resources :accounts, only: [:new, :create, :index, :destroy] do
+  resources :accounts do
     post 'fetch_transactions', on: :member
   end
   get '/accounts/:account_id/transactions', to: 'accounts#transactions', as: :account_transactions
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   resources :transactions, only: [:index, :edit, :update, :show]
 
-  resources :rules, only: [:show, :index, :new, :create, :update, :edit] do
+  resources :rules do
     post 'apply', on: :collection
   end
 

@@ -1,11 +1,5 @@
 <ul class="navbar-nav mr-auto">
   <% if current_user %>
-    <li class="nav-item <%= controller_name.include?('authorization') ? 'active' : '' %>">
-      <%= link_to 'Authorizations', authorizations_path, class: "nav-link" %>
-    </li>
-    <li class="nav-item <%= controller_name.include?('accounts') ? 'active' : '' %>">
-      <%= link_to 'Accounts', accounts_path, class: "nav-link" %>
-    </li>
     <li class="nav-item <%= controller_name.include?('classifications') ? 'active' : '' %>">
       <%= link_to 'Classifications', classifications_path, class: "nav-link" %>
     </li>
@@ -19,19 +13,22 @@
       <%= link_to 'Reports', new_report_path, class: "nav-link" %>
     </li>
   <% end %>
+</ul>
+<ul class="navbar-nav mr-right">
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       My Account
     </a>
-    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
       <% if current_user %>
+        <%= link_to 'Accounts', accounts_path, class: "dropdown-item" %>
+        <%= link_to 'Authorizations', authorizations_path, class: "dropdown-item" %>
+        <div class="dropdown-divider"></div>
         <%= link_to 'Logout', destroy_user_session_path, class: 'dropdown-item', method: :delete %>
       <% else %>
         <%= link_to 'Login', new_user_session_path, class: 'dropdown-item' %>
         <%= link_to 'Sign Up', new_user_registration_path, class: 'dropdown-item' %>
       <% end %>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#">Family</a>
     </div>
   </li>
 </ul>

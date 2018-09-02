@@ -17,6 +17,10 @@
             <br/>
             <div class="col-sm-3"><h5>Created</h5></div>
             <div class="col-sm-9"><%= @rule.created_at.to_s(:db) %></div>
+            <div class="col-sm-3"><h5>Actions</h5></div>
+            <div class="col-sm-9">
+              <%= link_to 'Delete', rule_path(@rule), method: :delete, class: 'btn btn-danger' %>
+            </div>
           </div>
         </div>
       </div>

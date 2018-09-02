@@ -4,7 +4,7 @@ class Rule < ApplicationRecord
   belongs_to :classification
   belongs_to :user
 
-  has_many :transactions
+  has_many :transactions, dependent: :nullify
 
   delegate :name, to: :classification, prefix: true, allow_nil: true
   delegate :group, to: :classification, prefix: true, allow_nil: true
