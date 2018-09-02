@@ -1,0 +1,53 @@
+<% start_date = @report.start_at.strftime('%Y/%m/%d') %>
+<% end_date = @report.end_at.strftime('%Y/%m/%d') %>
+
+<div class="classification-report report">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Transaction Report: <small><%= start_date %> thru <%= end_date %></small></h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table table-condensed">
+        <thead>
+        <tr>
+          <th>Description</th>
+          <th>Account</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @transactions.each do |object| %>
+          <tr>
+            <td>
+              <%= object.description %>
+            </td>
+            <td>
+              <nobr><%= object.account.display_name %></nobr>
+            </td>
+            <td>
+              <nobr><%= humanized_money_with_symbol object.amount.round(2) %></nobr>
+            </td>
+            <td>
+              <button id="show-transaction"
+                      href="#"
+                      data-path="<%= transaction_path(object) %>"
+                      class="transaction-details-btn btn btn-primary btn-sm"
+                      data-id="<%= object.id %>">Details</button>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+      <div class="d-flex justify-content-center">
+        <%= paginate @transactions, theme: 'twitter-bootstrap-4' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="transaction-container"></div>

@@ -5,20 +5,20 @@
       <div class="card-body">
         <div class="card-text">
           <div class="row">
-            <div class="col-sm-3"><h5><%= ENV['APP_NAME'] %> Name</h5></div>
-            <div class="col-sm-9"><%= @account.display_name %></div>
+            <div class="col-sm-6"><h5><%= ENV['APP_NAME'] %> Name</h5></div>
+            <div class="col-sm-6"><%= @account.display_name %></div>
             <br/>
-            <div class="col-sm-3"><h5>Bank Account Nickname</h5></div>
-            <div class="col-sm-9"><%= @account.plaid_name %></div>
+            <div class="col-sm-6"><h5>Bank Account Nickname</h5></div>
+            <div class="col-sm-6"><%= @account.plaid_name %></div>
             <br/>
-            <div class="col-sm-3"><h5>Official Name</h5></div>
-            <div class="col-sm-9"><%= @account.plaid_official_name %></div>
+            <div class="col-sm-6"><h5>Official Name</h5></div>
+            <div class="col-sm-6"><%= @account.plaid_official_name %></div>
             <br/>
-            <div class="col-sm-3"><h5>Institution Name</h5></div>
-            <div class="col-sm-9"><%= @account.plaid_institution&.name %></div>
+            <div class="col-sm-6"><h5>Institution Name</h5></div>
+            <div class="col-sm-6"><%= @account.plaid_institution&.name %></div>
             <br/>
-            <div class="col-sm-3"><h5>Created</h5></div>
-            <div class="col-sm-9"><%= @account.created_at.to_s(:db) %></div>
+            <div class="col-sm-6"><h5>Created</h5></div>
+            <div class="col-sm-6"><%= @account.created_at.to_s(:db) %></div>
           </div>
         </div>
       </div>
