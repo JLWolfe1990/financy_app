@@ -15,8 +15,46 @@
           <%= render partial: 'show_card', locals: { label: 'Classification', contents: @transaction.classification&.display_name } %>
 
           <% if @transaction.rule %>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card">
+                  <h6 class="card-header">Rule</h6>
+                  <div class="card-body">
+                    <div class="card-text">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <%= link_to @transaction.rule.display_name, rule_path(@transaction.rule)%>
+                        </div>
+                        <div class="col-sm-6"></div>
+                        <br/>
+                        <br/>
+                        <div class="col-sm-6">
+                          Fixed
+                        </div>
+                        <div class="col-sm-6">
+                          <%= @transaction.rule.fixed || 'false' %>
+                        </div>
+                        <div class="col-sm-6">
+                          Recurring
+                        </div>
+                        <div class="col-sm-6">
+                          <%= @transaction.rule.recurring || 'false' %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <br/>
             <%= render partial: 'show_card', locals: { label: 'Rule', contents: @transaction.rule.display_name, link: rule_path(@transaction.rule) } %>
+
+            <br/>
+            <%= render partial: 'show_card', locals: { label: 'Fixed', contents: @transaction.rule.fixed || 'false' } %>
+
+            <br/>
+            <%= render partial: 'show_card', locals: { label: 'Recurring', contents: @transaction.rule.recurring || 'false' } %>
           <% end %>
 
           <br/>

@@ -8,6 +8,12 @@
             <div class="col-sm-3"><h5>Regex</h5></div>
             <div class="col-sm-9">/<%= @rule.regex %>/</div>
             <br/>
+            <div class="col-sm-3"><h5>Fixed</h5></div>
+            <div class="col-sm-9"><%= @rule.fixed %></div>
+            <br/>
+            <div class="col-sm-3"><h5>Recurring</h5></div>
+            <div class="col-sm-9"><%= @rule.recurring %></div>
+            <br/>
             <div class="col-sm-3"><h5>Classification</h5></div>
             <div class="col-sm-9">
               <% if @rule.classification %>
@@ -20,6 +26,7 @@
             <div class="col-sm-3"><h5>Actions</h5></div>
             <div class="col-sm-9">
               <%= link_to 'Delete', rule_path(@rule), method: :delete, class: 'btn btn-danger' %>
+              <%= link_to 'Edit', edit_rule_path(@rule), class: 'btn btn-warning' %>
             </div>
           </div>
         </div>

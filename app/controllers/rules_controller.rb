@@ -33,7 +33,9 @@ class RulesController < ApplicationController
     Rule.transaction do
       if @rule.update update_params
         @rule.reapply!
-        redirect_to new_rule_path
+        redirect_to rule_path(@rule)
+      else
+        render edit_rule_path(@rule)
       end
     end
   end
@@ -68,7 +70,7 @@ class RulesController < ApplicationController
   end
 
   def create_params
-    params.require(:rule).permit(:id, :regex, :classification_id, :user_id)
+    params.require(:rule).permit(:id, :regex, :classification_id, :user_id, :fixed, :recurring)
   end
 
   def update_params
