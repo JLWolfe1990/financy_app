@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219085342) do
+ActiveRecord::Schema.define(version: 20190507230151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 20171219085342) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.bigint "tenant_id"
+    t.boolean "recurring"
+    t.boolean "fixed"
     t.index ["classification_id"], name: "index_rules_on_classification_id"
     t.index ["tenant_id"], name: "index_rules_on_tenant_id"
     t.index ["user_id"], name: "index_rules_on_user_id"
