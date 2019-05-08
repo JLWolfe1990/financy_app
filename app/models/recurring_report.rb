@@ -1,5 +1,5 @@
 class RecurringReport < RuleReport
   def transactions
-    super.where(recurring: true)
+    super.joins(:rule).where(rules:{recurring: true})
   end
 end

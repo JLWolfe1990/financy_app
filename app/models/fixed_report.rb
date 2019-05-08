@@ -1,5 +1,5 @@
 class FixedReport < RuleReport
   def transactions
-    super.where(fixed: true)
+    super.joins(:rule).where(rules:{fixed: true})
   end
 end
