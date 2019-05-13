@@ -59,15 +59,17 @@
         apiVersion: 'v2',
         clientName: '<%= ENV['APP_NAME'] %>',
         env: 'development',
-        product: ['auth', 'transactions'],
+        product: ['auth'],
         key: '<%= ENV["PLAID_PUBLIC_KEY"] %>',
         onSuccess: callback
       });
     };
 
+    debugger
     $('#authorize').on('click', function(e) {
       $(e.target).attr('data-clicked', true);
 
+      debugger
       var handler = connect(
         function(public_token, metadata) {
           var id = $('#authorize[data-clicked]').attr('data-id');
