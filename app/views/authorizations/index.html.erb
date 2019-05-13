@@ -59,7 +59,7 @@
         apiVersion: 'v2',
         clientName: '<%= ENV['APP_NAME'] %>',
         env: 'development',
-        product: ['transactions'],
+        product: ['auth', 'transactions'],
         key: '<%= ENV["PLAID_PUBLIC_KEY"] %>',
         onSuccess: callback
       });
