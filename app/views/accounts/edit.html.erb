@@ -2,6 +2,7 @@
 
 <%= simple_form_for @account do |f| %>
   <%= f.input :name, placeholder: 'Account alias', label: 'Nickname' %>
+  <%= f.input :archived %>
   <%= f.hidden_field :plaid_institution, collection: PlaidInstitution.all.order(:name), value_method: :id %>
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.submit %>

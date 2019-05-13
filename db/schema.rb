@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190507230151) do
+ActiveRecord::Schema.define(version: 20190512234903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20190507230151) do
     t.string "plaid_official_name"
     t.datetime "last_synced_at"
     t.bigint "tenant_id"
+    t.boolean "archived"
     t.index ["authorization_id"], name: "index_accounts_on_authorization_id"
     t.index ["plaid_institution_id"], name: "index_accounts_on_plaid_institution_id"
     t.index ["tenant_id"], name: "index_accounts_on_tenant_id"

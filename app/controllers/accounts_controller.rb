@@ -24,7 +24,8 @@ class AccountsController < ApplicationController
   end
 
   def index
-    @accounts = Account.order(:created_at)
+    @accounts = Account.order(:created_at).active
+    @accounts = @accounts.archived if params[:archived]
   end
 
   def fetch_transactions
@@ -55,6 +56,6 @@ class AccountsController < ApplicationController
   private
 
   def object_params
-    params.require(:account).permit(:name, :user_id, :plaid_institution_id)
+    params.require(:account).permit(:name, :user_id, :plaid_institution_id, :archived)
   end
 end
