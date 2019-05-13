@@ -65,13 +65,12 @@
       });
     };
 
-    debugger
     $('#authorize').on('click', function(e) {
       $(e.target).attr('data-clicked', true);
 
-      debugger
       var handler = connect(
         function(public_token, metadata) {
+          debugger
           var id = $('#authorize[data-clicked]').attr('data-id');
           //todo: get rid of the clicked attr
           var inst_id = metadata.institution.institution_id
@@ -80,7 +79,9 @@
             plaid_institution_id: inst_id
           };
 
+          debugger
           $.post('/authorizations/' + id + '/link', json, function() {
+            debugger
             $('#container').fadeOut('fast', function() {
               $('#intro').hide();
             });
@@ -88,6 +89,7 @@
         }
       );
 
+      debugger
       handler.open();
     });
   })(jQuery);
