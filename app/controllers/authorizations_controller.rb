@@ -1,6 +1,13 @@
 class AuthorizationsController < ApplicationController
   #todo
   skip_before_action :verify_authenticity_token, only: [:link]
+  before_filter :add_allow_credentials_headers, only: [:options]
+
+  def add_allow_credentials_headers
+    response.headers['Access-Control-Allow-Origin'] = request.headers['Origin'] || '*' # the domain you're making the request from
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Allow-Headers'] = 'accept, content-type'
+  end
 
   def index
     @authorizations = current_user.authorizations

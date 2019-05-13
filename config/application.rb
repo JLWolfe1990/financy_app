@@ -22,11 +22,6 @@ module FinancyApp
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
-    config.action_dispatch.default_headers = {
-      'Access-Control-Allow-Origin' => 'https://development.plaid.com',
-      'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
-    }
-
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
