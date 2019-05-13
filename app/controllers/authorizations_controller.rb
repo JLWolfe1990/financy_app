@@ -1,7 +1,7 @@
 class AuthorizationsController < ApplicationController
   #todo
   skip_before_action :verify_authenticity_token, only: [:link]
-  before_filter :add_allow_credentials_headers, only: [:options]
+  before_action :add_allow_credentials_headers
 
   def add_allow_credentials_headers
     response.headers['Access-Control-Allow-Origin'] = request.headers['Origin'] || '*' # the domain you're making the request from
