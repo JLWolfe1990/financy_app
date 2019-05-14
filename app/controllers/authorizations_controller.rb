@@ -38,6 +38,13 @@ class AuthorizationsController < ApplicationController
     redirect_to authorizations_path
   end
 
+  def unauthorize
+    @authorization = Authorization.find(link_params[:id])
+    @authorization.unauthorize!
+
+    redirect_to authorizations_path
+  end
+
   def add_accounts
     @authorization = Authorization.find(params.fetch(:id))
     @authorization.create_accounts!

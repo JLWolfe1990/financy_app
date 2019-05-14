@@ -24,9 +24,13 @@ class AccountsController < ApplicationController
   end
 
   def index
-    @accounts = Account.order(:created_at).active
-    @accounts = @accounts.archived if params[:archived]
+    if params[:archived]
+      @accounts = Account.order(:created_at).archived
+    else
+      @accounts = Account.order(:created_at).active
+    end
   end
+
 
   def fetch_transactions
     @account = Account.find(params.fetch(:id))

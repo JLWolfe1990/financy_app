@@ -16,8 +16,12 @@ class Authorization < ApplicationRecord
     self.save!
   end
 
+  def unauthorize!
+    update! access_token: nil
+  end
+
   def create_accounts!
-    accounts_response = PlaidWrapper.client.accounts.get(access_token)
+    accounts_response = PlaidWrapper.client.accounts.get(self.access_token)
 
     accounts_response['accounts'].each do |acct|
       Account.find_or_create_by(

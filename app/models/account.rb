@@ -4,9 +4,8 @@ class Account < ApplicationRecord
   belongs_to :plaid_institution
   belongs_to :user
   belongs_to :authorization
-  has_many :transactions
-
-  scope :active, -> { where.not(archived: true) }
+  has_many :transactions, dependent: :destroy
+  scope :active, -> { where('archived = false OR archived is null') }
   scope :archived, -> { where(archived: true) }
 
   def fetch_transactions!(start_date=nil, end_date=nil)

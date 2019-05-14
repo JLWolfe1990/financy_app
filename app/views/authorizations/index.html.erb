@@ -31,6 +31,7 @@
             <td>
               <% if authorization.connected? %>
                 <%= link_to 'Add Accounts', add_accounts_authorization_path(authorization), method: :post, class: 'btn btn-primary' %>
+                <%= link_to 'Unlink', unauthorize_authorization_path(authorization), method: :put, class: 'btn btn-danger' %>
               <% else %>
                 <a href="#"
                    id="authorize"
@@ -59,7 +60,7 @@
         apiVersion: 'v2',
         clientName: '<%= ENV['APP_NAME'] %>',
         env: 'development',
-        product: ['auth'],
+        product: ['transactions'],
         key: '<%= ENV["PLAID_PUBLIC_KEY"] %>',
         onSuccess: callback
       });
@@ -70,7 +71,6 @@
 
       var handler = connect(
         function(public_token, metadata) {
-          debugger
           var id = $('#authorize[data-clicked]').attr('data-id');
           //todo: get rid of the clicked attr
           var inst_id = metadata.institution.institution_id
@@ -79,9 +79,7 @@
             plaid_institution_id: inst_id
           };
 
-          debugger
           $.post('/authorizations/' + id + '/link', json, function() {
-            debugger
             $('#container').fadeOut('fast', function() {
               $('#intro').hide();
             });
@@ -89,7 +87,6 @@
         }
       );
 
-      debugger
       handler.open();
     });
   })(jQuery);
