@@ -13,7 +13,7 @@ class Transaction < ApplicationRecord
   scope :focus, -> { where("transactions.classification_id NOT IN (#{Classification.ignored.map(&:id).join(', ')}) or transactions.classification_id IS NULL") }
   scope :range, ->(start_at, end_at) { where('date >= ? and date <= ?', start_at.strftime('%Y/%m/%d'), end_at.strftime('%Y/%m/%d'))}
   scope :not_excluded, -> { joins(:classification).where('classifications.excluded IS NULL or classifications.excluded = false') }
-  scope :active, -> { joins(:account).where(accounts: { archived: true })}
+  scope :active, -> { joins(:account).where("accounts.archived = false OR accounts.archived IS NULL") }
 
 
   def pending?
