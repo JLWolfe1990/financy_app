@@ -3,19 +3,27 @@ class ClassificationsController < ApplicationController
   before_action :find_transactions, only: [:show, :transactions]
 
   def index
-    @classifications = Classification.all
+    @classifications = Classification.all.order(:group, :name)
   end
 
   def new
+    @classification = Classification.new group: 'personal'
   end
 
   def create
+    @classification = Classification.create classification_params
   end
 
   def update
   end
 
   def show
+  end
+
+  def destroy
+    Classification.find(params.fetch(:id)).destroy!
+
+    redirect_to classifications_path
   end
 
   def transactions
@@ -38,5 +46,9 @@ class ClassificationsController < ApplicationController
 
     @total = @all_transactions.sum(:amount)
     @transactions = @all_transactions.page(params[:page])
+  end
+
+  def classification_params
+    params.require(:classification).permit(:name, :group, :excluded)
   end
 end

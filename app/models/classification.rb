@@ -3,7 +3,7 @@ class Classification < ApplicationRecord
 
   enum group: [:mixed, :business, :personal]
 
-  has_many :rules
+  has_many :rules, dependent: :nullify
   has_many :transactions, through: :rules
 
   validates :group, presence: true

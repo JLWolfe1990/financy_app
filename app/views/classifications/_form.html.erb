@@ -1,0 +1,6 @@
+<%= simple_form_for @classification do |f| %>
+  <%= f.input :name, placeholder: 'Name' %>
+  <%= f.input :group, as: :select, collection: [['Mixed','mixed'], ['Business', 'business'], ['Personal', 'personal']] %>
+  <%= f.input :excluded %>
+  <%= f.submit class: 'btn btn-success' %>
+<% end %>

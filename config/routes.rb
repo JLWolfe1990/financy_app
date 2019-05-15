@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     post 'apply', on: :collection
   end
 
-  resources :classifications, except: :destroy do
+  resources :classifications do
     get 'transactions', on: :member
   end
 
