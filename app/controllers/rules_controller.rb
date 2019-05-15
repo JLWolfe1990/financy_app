@@ -45,12 +45,12 @@ class RulesController < ApplicationController
 
   def show
     @rule = Rule.find(params.fetch(:id))
-    @all_transactions = @rule.transactions
+    @all_transactions = @rule.transactions.active
     @start_date = Date.parse(params[:start_date]) if params[:start_date]
     @end_date = Date.parse(params[:end_date]) if params[:end_date]
     @all_transactions = @all_transactions.range(@start_date, @end_date) if @start_date && @end_date
     @transactions = @all_transactions.joins(:account).page(params[:page])
-    @total = @rule.transactions.sum(:amount)
+    @total = @all_transactions.sum(:amount)
   end
 
   def destroy
@@ -66,7 +66,7 @@ class RulesController < ApplicationController
   private
 
   def populate_similar_transactions
-    @transactions = Transaction.joins(:account).unclassified.order(:description).limit(10)
+    @transactions = Transaction.active.joins(:account).unclassified.order(:description).limit(10)
   end
 
   def create_params

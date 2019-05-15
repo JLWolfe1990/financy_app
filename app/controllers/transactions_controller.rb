@@ -1,7 +1,7 @@
 class TransactionsController < ApplicationController
   def index
     @report = Report.new
-    @transactions = Transaction.all
+    @transactions = Transaction.all.active
 
     @start_at = params[:start_at] ? DateTime.parse(params[:start_at]) : nil
     @end_at = params[:end_at] ? DateTime.parse(params[:end_at]) : nil

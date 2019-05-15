@@ -4,6 +4,6 @@ class TransactionReport < Report
   end
 
   def transactions
-    Transaction.range(start_at, end_at).focus
+    Transaction.range(start_at, end_at).focus.active
   end
 end

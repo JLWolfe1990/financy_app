@@ -40,7 +40,7 @@ class ClassificationsController < ApplicationController
     @start_date = Date.parse(params[:start_date]) if params[:start_date]
     @end_date = Date.parse(params[:end_date]) if params[:end_date]
 
-    @all_transactions = @classification.transactions
+    @all_transactions = @classification.transactions.active
 
     @all_transactions = @all_transactions.range(@start_date, @end_date) if @start_date && @end_date
 
