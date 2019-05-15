@@ -20,6 +20,7 @@ class ReportsController < ApplicationController
     @report = Report.find(params.fetch(:id))
     @report.run!
     @transactions = @report.transactions.page(params[:page]).per(25)
+    @sum = @report.transactions.sum(:amount)
 
     render "reports/#{@report.type.to_s.underscore.downcase}"
   end
