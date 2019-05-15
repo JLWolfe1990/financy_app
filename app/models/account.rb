@@ -1,4 +1,5 @@
 class Account < ApplicationRecord
+  # acct key from the api is actually routing number : account number combo
   acts_as_tenant
 
   belongs_to :plaid_institution

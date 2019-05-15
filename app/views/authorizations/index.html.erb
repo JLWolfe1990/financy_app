@@ -30,7 +30,7 @@
             <td><%= authorization.connected? %></td>
             <td>
               <% if authorization.connected? %>
-                <%= link_to 'Add Accounts', add_accounts_authorization_path(authorization), method: :post, class: 'btn btn-primary' %>
+                <%= link_to 'Refresh Accounts', refresh_accounts_authorization_path(authorization), method: :put, class: 'btn btn-primary' %>
                 <%= link_to 'Unlink', unauthorize_authorization_path(authorization), method: :put, class: 'btn btn-danger' %>
               <% else %>
                 <a href="#"
@@ -60,7 +60,7 @@
         apiVersion: 'v2',
         clientName: '<%= ENV['APP_NAME'] %>',
         env: 'development',
-        product: ['transactions'],
+        product: ['auth'],
         key: '<%= ENV["PLAID_PUBLIC_KEY"] %>',
         onSuccess: callback
       });

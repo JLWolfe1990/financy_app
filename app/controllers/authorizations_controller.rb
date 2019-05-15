@@ -45,9 +45,9 @@ class AuthorizationsController < ApplicationController
     redirect_to authorizations_path
   end
 
-  def add_accounts
+  def refresh_accounts
     @authorization = Authorization.find(params.fetch(:id))
-    @authorization.create_accounts!
+    @authorization.refresh_accounts! current_user
 
     redirect_to accounts_path
   end

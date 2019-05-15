@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :authorizations, only: [:create, :index, :new] do
     post 'link', on: :member
-    post 'add_accounts', on: :member
+    put 'refresh_accounts', on: :member
     put 'unauthorize', on: :member
   end
 
